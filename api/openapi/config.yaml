@@ -1,0 +1,161 @@
+# App config service
+# An admin can store a key and a value for a specific app (client) and version
+# A client can get all changed config fields since the last received change for a specific client and version
+swagger: "2.0"
+info:
+  title: Config API
+  description: Fetch Config for requested client version
+  version: "1.0.0"
+paths:
+  /config/{client}:
+    get:
+      description: Get config for the highest version based on client type
+      parameters:
+        - name: client
+          in: path
+          type: string
+          required: true
+          description: Identifier for the client. E.g. "ios"
+      responses:
+        200:
+          description: An object for each key that has a changed value
+          schema:
+            type: object
+            example: '{"font-size": "12", version: 1}'
+        404:
+          description: Not Found
+  /config/{client}/{version}:
+    get:
+      description: Get all changed config fields since the last received change for a specific client and version
+      parameters:
+        - name: client
+          in: path
+          type: string
+          required: true
+          description: Identifier for the client. E.g. "ios"
+        - name: version
+          in: path
+          type: number
+          required: true
+          description: Build version of the client. E.g. 267
+      responses:
+        200:
+          description: An object for each key that has a changed value
+          schema:
+            type: object
+            example: '{"font-size": "12"}'
+        404:
+          description: Not Found
+    patch:
+      parameters:
+        - name: client
+          in: path
+          type: string
+          required: true
+          description: Identifier for the client. E.g. "ios"
+        - name: version
+          in: path
+          type: number
+          required: true
+          description: Build version of the client. E.g. 267
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ClientConfig"
+      responses:
+        200:
+          description: OK
+        404:
+          description: Not Found
+        400:
+          description: Bad request, e.g. type of value is different to existing, key is invalid
+    put:
+      parameters:
+        - name: client
+          in: path
+          type: string
+          required: true
+          description: Identifier for the client. E.g. "ios"
+        - name: version
+          in: path
+          type: number
+          required: true
+          description: Build version of the client. E.g. 267
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ClientConfig"
+      responses:
+        200:
+          description: OK
+        404:
+          description: Not Found
+    delete:
+      parameters:
+        - name: client
+          in: path
+          type: string
+          required: true
+          description: Identifier for the client. E.g. "ios"
+        - name: version
+          in: path
+          type: number
+          required: true
+          description: Build version of the client. E.g. 267
+      responses:
+        204:
+          description: No Content
+  /config:
+    post:
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Config"
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad request, e.g. key is invalid
+    patch:
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/Config"
+      responses:
+        200:
+          description: OK
+        400:
+          description: Bad request, e.g. type of value is different to existing, key is invalid
+
+definitions:
+  Config:
+    required:
+      - client
+      - version
+      - key
+      - value
+    properties:
+      client:
+        type: string
+      version:
+        type: number
+      key:
+        type: string
+        description: Key cannot be named "version"
+      value:
+        type: string
+  ClientConfig:
+    required:
+      - key
+      - value
+    properties:
+      key:
+        type: string
+      value:
+        type: string
