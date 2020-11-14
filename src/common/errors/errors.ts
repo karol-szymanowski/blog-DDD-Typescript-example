@@ -9,7 +9,7 @@ export abstract class CustomError extends Error {
     super(msg || errorDetails.toString());
   }
 
-  readonly type: ErrorType;
+  abstract readonly type: ErrorType;
 }
 
 export class IncorrectInputError extends CustomError {
