@@ -8,4 +8,6 @@ export interface Logger {
   warn(msg: string): void;
 
   critical(msg: string): void;
+
+  http(msg: string): void;
 }

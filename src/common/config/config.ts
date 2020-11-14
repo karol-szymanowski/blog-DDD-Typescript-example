@@ -1,19 +1,16 @@
 import { IsIn, IsInt } from 'class-validator';
 
-export interface Config {
-  port: number;
-}
-
-export class Configs implements Config {
-  constructor(configs?: Partial<Config>) {
-    if (configs) {
-      Object.assign(this, configs);
-    }
+export class Config {
+  constructor(params?: Partial<Config>) {
+    Object.assign(this, params);
   }
 
   @IsInt()
   port: number = Number(process.env.PORT) || 3000;
 
-  @IsIn(['debug', 'info', 'warn', 'error'])
-  logLevel: string = process.env.LOG_LEVEL || 'info';
+  @IsIn(['debug', 'info', 'warn', 'error', 'http'])
+  logLevel: string = process.env.LOG_LEVEL || 'http';
+
+  @IsIn(['development', 'production', 'test'])
+  env: string = process.env.ENV || 'development';
 }

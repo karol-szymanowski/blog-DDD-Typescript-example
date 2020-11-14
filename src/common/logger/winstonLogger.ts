@@ -4,7 +4,7 @@ import { createLogger, format, transports } from 'winston';
 
 const { combine, timestamp, printf } = format;
 const myFormat = printf(({ level, message, timestamp }) => {
-  return `[${level.toUpperCase()}] ${timestamp}: ${message}`;
+  return `[${level.toUpperCase()}] ${timestamp} ${message}`;
 });
 
 export class WinstonLogger implements Logger {
@@ -36,5 +36,9 @@ export class WinstonLogger implements Logger {
 
   critical(msg: string): void {
     this.logger.crit(msg);
+  }
+
+  http(msg: string): void {
+    this.logger.http(msg);
   }
 }
