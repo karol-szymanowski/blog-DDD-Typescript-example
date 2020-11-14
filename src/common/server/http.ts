@@ -109,7 +109,7 @@ export class HttpServer {
 
     createTerminus(server, {
       signal: 'SIGINT',
-      healthChecks: { '/health': this.onHealthCheck },
+      healthChecks: { '/health': () => this.onHealthCheck() },
       onSignal: this.gracefulShutdown,
     });
 
