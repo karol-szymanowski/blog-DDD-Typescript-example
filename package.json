@@ -1,5 +1,5 @@
 {
-  "name": "TDD-Typescript",
+  "name": "blog",
   "version": "1.0.0",
   "main": "src/index.ts",
   "repository": "git@github.com:tetrash/TDD-Typescript.git",
@@ -7,14 +7,16 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start:dev": "ts-node-dev --respawn src/index.ts",
-    "test": "jest",
+    "start:dev": "LOG_LEVEL=debug ts-node-dev --respawn src/index.ts",
+    "test": "jest --testPathPattern=src/",
+    "test:integration": "ENV=test jest --testPathPattern=test/",
     "build": "tsc",
     "lint": "eslint",
     "cleanup": "rm -rf ./dist ./node_modules"
   },
   "dependencies": {
     "@godaddy/terminus": "^4.4.1",
+    "axios": "^0.21.0",
     "body-parser": "^1.19.0",
     "class-validator": "^0.12.2",
     "cors": "^2.8.5",
