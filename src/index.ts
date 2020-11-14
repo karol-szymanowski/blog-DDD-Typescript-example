@@ -1,11 +1,9 @@
 import { WinstonLogger } from './common/logger/winstonLogger';
 import { HttpServer } from './common/server/http';
-import { Configs } from './common/config/config';
+import { Config } from './common/config/config';
 import { validateOrReject } from 'class-validator';
 
-import { configRouter } from './config/ports/http';
-
-const config = new Configs();
+const config = new Config();
 const winstonLogger = new WinstonLogger(config.logLevel);
 
 async function init() {
@@ -14,9 +12,11 @@ async function init() {
   const httpServer = new HttpServer(winstonLogger, config.port);
 
   httpServer.setupCors();
-  httpServer.setupMiddleware();
-  httpServer.setupDocs('./api/openapi');
-  httpServer.loadRoutes([{ prefix: 'config', router: configRouter }]);
+  httpServer.loadMiddlewares();
+  if (config.env === 'development') {
+    httpServer.setupDocs('./api/openapi');
+  }
+  httpServer.loadRoutes([]);
   httpServer.start();
 }
 
