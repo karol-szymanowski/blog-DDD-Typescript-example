@@ -2,6 +2,7 @@ import { WinstonLogger } from './common/logger/winstonLogger';
 import { HttpServer } from './common/server/http';
 import { Config } from './common/config/config';
 import { validateOrReject } from 'class-validator';
+import { postsRouter } from './posts/ports/http';
 
 const config = new Config();
 const winstonLogger = new WinstonLogger(config.logLevel);
@@ -16,7 +17,7 @@ async function init() {
   if (config.env === 'development') {
     httpServer.setupDocs('./api/openapi');
   }
-  httpServer.loadRoutes([]);
+  httpServer.loadRoutes([{ prefix: 'posts', router: postsRouter }]);
   httpServer.start();
 }
 
