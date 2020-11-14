@@ -9,4 +9,5 @@ COPY . .
 
 RUN yarn build
 
+ENV ENV=production
 CMD ["node", "./dist/index.js"]
