@@ -13,6 +13,14 @@ export class WinstonLogger implements Logger {
   constructor(level = 'info') {
     this.logger = createLogger({
       level,
+      levels: {
+        crit: 0,
+        error: 1,
+        warn: 2,
+        info: 3,
+        http: 4,
+        debug: 5,
+      },
       format: combine(timestamp(), myFormat),
       transports: [new transports.Console()],
     });
@@ -35,7 +43,7 @@ export class WinstonLogger implements Logger {
   }
 
   critical(msg: string): void {
-    this.logger.crit(msg);
+    this.logger.log('crit', msg);
   }
 
   http(msg: string): void {

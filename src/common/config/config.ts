@@ -11,6 +11,6 @@ export class Config {
   @IsIn(['debug', 'info', 'warn', 'error', 'http'])
   logLevel: string = process.env.LOG_LEVEL || 'http';
 
-  @IsIn(['development', 'production', 'test'])
-  env: string = process.env.ENV || 'development';
+  @IsIn(['dev', 'prod', 'test'])
+  env: string = process.env.ENV || 'dev';
 }

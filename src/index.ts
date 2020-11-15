@@ -14,7 +14,7 @@ async function init() {
 
   httpServer.setupCors();
   httpServer.loadMiddlewares();
-  if (config.env === 'development') {
+  if (config.env === 'dev') {
     httpServer.setupDocs('./api/openapi');
   }
   httpServer.loadRoutes([{ prefix: 'posts', router: postsRouter }]);
@@ -22,6 +22,6 @@ async function init() {
 }
 
 init().catch((err) => {
-  winstonLogger.critical(err);
+  winstonLogger.critical(err.toString());
   process.exit(1);
 });
