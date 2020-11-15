@@ -1,6 +1,4 @@
-# TDD-Typescript
-
-An application for storing and retrieving client configurations.
+# Blog API
 
 ## Folder Structure
 ```
@@ -15,7 +13,7 @@ An application for storing and retrieving client configurations.
 
 ## Getting started
 **Requirements:**
-- node
+- node 10 or newer
 - yarn
 
 ### Development:
@@ -37,25 +35,26 @@ $ docker build -t blog:latest .
 $ docker run -p 3000:3000 -e PORT=3000 blog:latest
 ```
 
-## Configuring
+## Configuration
+Application is using environment variables to store configs.
 
 ```
 | Variable name | type   | description                                       | default     |
 |---------------|--------|---------------------------------------------------|-------------|
 | PORT          | Number | The port on which the application will be listing | 3000        |
-| LOG_LEVEL     | String |                                                   | http        |
-| ENV           | String |                                                   | development |
+| LOG_LEVEL     | String | Available: debug, http, info, warn, error         | http        |
+| ENV           | String | Available: dev, prod, test                        | development |
 |               |        |                                                   |             |
 ```
 
 ## Testing
 
-### Run unit tests:
+**Unit tests:**
 ```
 $ yarn test
 ```
 
-### Run integration tests:
+**Integration tests:**
 ```
 $ yarn run test:integration
 ```
